@@ -16,7 +16,7 @@ public class TrunkServiceImpl implements TrunkService {
     @Override
     public boolean solution() {
         var currentMinute = LocalDateTime.now().getMinute();
-        return (currentMinute & 1) == 0;
+        return (currentMinute & 1) ==  0;
     }
 
 
