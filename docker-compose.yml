@@ -1,0 +1,18 @@
+version: "2"
+services:
+  users:
+    image: vendor/users
+    expose:
+      - 80
+    labels:
+      project.git: "https://github.com/vendor/users.git"    # ссылка на репозиторий
+      project.git.branch: cool-feature                      # нужный бранч, по умолчанию - мастер
+      project.build: make                                   # добавляем команду для сборки имиджа
+
+  web-ui:
+    image: vendor/web-ui
+    ports:
+      - 80:80
+    labels:
+      project.git: "https://github.com/vendor/web-ui.git"
+      project.build: make
