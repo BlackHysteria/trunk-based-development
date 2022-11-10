@@ -40,7 +40,11 @@ public class GitServiceImpl implements GitService {
 
     @SneakyThrows
     private void runGitCommand(String command) {
-        getGitLog();
+        List<Map<GitKeywords, String>> qwe = getGitLog();
+
+        //qwe.
+
+
     }
 
     @SneakyThrows
