@@ -1,15 +1,14 @@
 package com.bakumcev.demo.service;
 
 import com.bakumcev.demo.enums.GitKeywords;
-import com.bakumcev.demo.model.GitLogModel;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface GitService {
 
     String log();
 
-    List<HashMap<GitKeywords, String>> getGitLog();
+    List<Map<GitKeywords, String>> getGitLog();
 
 }
