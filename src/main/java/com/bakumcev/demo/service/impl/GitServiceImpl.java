@@ -40,15 +40,6 @@ public class GitServiceImpl implements GitService {
 
     @SneakyThrows
     private void runGitCommand(String command) {
-        /*Process p = Runtime.getRuntime().exec(command);
-        BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        String text = command + "\n";
-        while ((line = input.readLine()) != null) {
-            text += line;
-            System.out.println("Line: " + line);
-        }*/
-
         getGitLog();
     }
 
