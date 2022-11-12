@@ -23,14 +23,4 @@ public class TrunkController {
         return gitService.push();
     }
 
-    @GetMapping("/debug/negative")
-    public String getPositive() {
-        return "Finish negative case!";
-    }
-
-    @GetMapping("/debug/positive")
-    public String getNegative() {
-        return "Finish positive case!";
-    }
-
 }

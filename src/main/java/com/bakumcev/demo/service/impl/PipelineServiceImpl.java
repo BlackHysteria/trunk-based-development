@@ -1,29 +1,28 @@
 package com.bakumcev.demo.service.impl;
 
-import com.bakumcev.demo.service.GitService;
 import com.bakumcev.demo.service.PipelineService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import static com.bakumcev.demo.enums.MavenCommand.MVN_CLEAN_INSTALL;
+import static com.bakumcev.demo.enums.MavenKeywords.BUILD_SUCCESS;
+import static java.util.stream.Collectors.joining;
 
 @Component
 @RequiredArgsConstructor
 public class PipelineServiceImpl implements PipelineService {
 
-    private final GitService gitService;
-
     @Override
+    @SneakyThrows
     public boolean run() {
-        if (yesOrNo()) {
-            gitService.push();
-        }
-
-        return false;
-    }
-
-    private boolean yesOrNo() {
-        var currentMinute = LocalDateTime.now().getMinute();
-        return (currentMinute & 1) ==  0;
+        String result = "";
+        var process = Runtime.getRuntime().exec(MVN_CLEAN_INSTALL.getCommand());
+        var input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        result = input.lines().collect(joining());
+        return result.contains(BUILD_SUCCESS.getCommand());
     }
 }

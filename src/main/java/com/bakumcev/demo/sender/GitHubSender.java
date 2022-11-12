@@ -13,7 +13,6 @@ import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
-@Slf4j
 @Component
 public class GitHubSender {
 
@@ -33,7 +32,7 @@ public class GitHubSender {
             var response = restTemplate.exchange(apiCommits, HttpMethod.GET, requestEntity, String.class);
             return String.valueOf(response.getBody());
         } catch (UnknownHttpStatusCodeException exception) {
-            log.error("Error getting commits from github");
+            //log.error("Error getting commits from github");
             return EMPTY;
         }
     }

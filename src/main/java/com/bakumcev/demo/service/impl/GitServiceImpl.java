@@ -3,6 +3,7 @@ package com.bakumcev.demo.service.impl;
 import com.bakumcev.demo.enums.GitKeywords;
 import com.bakumcev.demo.sender.GitHubSender;
 import com.bakumcev.demo.service.GitService;
+import com.bakumcev.demo.service.PipelineService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,9 +37,11 @@ public class GitServiceImpl implements GitService {
     private String key;
 
     private final GitHubSender gitHubSender;
+    private final PipelineService pipelineService;
 
     @Override
     public String push() {
+        String answer = null;
         var command = GIT_PUSH.getCommand() +
                 " https://" +
                 username +
@@ -48,23 +51,25 @@ public class GitServiceImpl implements GitService {
                 username +
                 "/trunk-based-development.git/ HEAD";
 
-        var lastSha = getLastSha();
+        var lastSha = getLastSha(GIT_SHOW_LAST.getCommand());
         var gitCommits = gitHubSender.getCommits(key);
 
         if (!gitCommits.contains(lastSha)) {
-            runProcess(command);
-            return "Last commit pushed!";
+            if (pipelineService.run()) {
+                runProcess(command);
+                answer = "Last commit pushed!";
+            }
         } else {
-            return "Latest commit is already in the repository!";
+            answer = "Latest commit is already in the repository!";
         }
+        return answer;
     }
 
     @Override
     @SneakyThrows
-    public String getLastSha() {
+    public String getLastSha(String command) {
         Map<GitKeywords, String> gitLogModel = new EnumMap<>(GitKeywords.class);
 
-        var command = GIT_SHOW_LAST.getCommand();
         var process = runProcess(command);
         var input = new BufferedReader(new InputStreamReader(process.getInputStream()));
         var line = EMPTY;
@@ -100,7 +105,7 @@ public class GitServiceImpl implements GitService {
     }
 
     @SneakyThrows
-    private Process runProcess(String command) {
+    public Process runProcess(String command) {
         return Runtime.getRuntime().exec(command);
     }
 

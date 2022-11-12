@@ -20,6 +20,6 @@ public interface GitService {
     /**
      * Получение последнего локального хэша коммита
      */
-    String getLastSha();
+    String getLastSha(String command);
 
 }
