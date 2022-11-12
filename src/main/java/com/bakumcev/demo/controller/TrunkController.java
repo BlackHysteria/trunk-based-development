@@ -1,7 +1,7 @@
 package com.bakumcev.demo.controller;
 
 import com.bakumcev.demo.service.GitService;
-import com.bakumcev.demo.service.TrunkService;
+import com.bakumcev.demo.service.PipelineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,31 +10,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TrunkController {
 
-    private final TrunkService service;
+    private final PipelineService pipelineService;
     private final GitService gitService;
 
-    @GetMapping("/runPipeline")
-    public boolean get() {
-        return service.solution();
+    @GetMapping("/pipeline/run")
+    public boolean run() {
+        return pipelineService.run();
     }
 
-    @GetMapping("/git")
-    public String log() {
-        return gitService.log();
+    @GetMapping("/git/push")
+    public String push() {
+        return gitService.push();
     }
 
-    @GetMapping("/test/negative")
+    @GetMapping("/debug/negative")
     public String getPositive() {
         return "Finish negative case!";
     }
 
-    @GetMapping("/test/positive")
+    @GetMapping("/debug/positive")
     public String getNegative() {
-        //service.
-
-
         return "Finish positive case!";
     }
-
 
 }

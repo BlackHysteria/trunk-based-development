@@ -7,8 +7,19 @@ import java.util.Map;
 
 public interface GitService {
 
-    String log();
+    /**
+     * Push в GitHub
+     */
+    String push();
 
-    List<Map<GitKeywords, String>> getGitLog();
+    /**
+     * Коллекция логов
+     */
+    List<Map<GitKeywords, String>> getFullGitLogs();
+
+    /**
+     * Получение последнего локального хэша коммита
+     */
+    String getLastSha();
 
 }

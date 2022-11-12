@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 
 @Data
@@ -17,12 +16,6 @@ import java.util.HashMap;
 @EqualsAndHashCode
 public class GitLogModel {
 
-    /*private String commit;
-    private String author;
-    private LocalDateTime createdDate;
-    private String description;*/
-
     private HashMap<GitKeywords, String> info;
-
 
 }

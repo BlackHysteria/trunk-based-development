@@ -8,9 +8,7 @@ import lombok.Getter;
 public enum GitKeywords {
 
     COMMIT("commit"),
-
     AUTHOR("Author"),
-
     DATE("Date");
 
     private final String keywords;
