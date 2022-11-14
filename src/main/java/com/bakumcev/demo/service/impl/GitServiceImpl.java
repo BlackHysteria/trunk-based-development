@@ -54,7 +54,7 @@ public class GitServiceImpl implements GitService {
         var lastSha = getLastSha(GIT_SHOW_LAST.getCommand());
         var gitCommits = gitHubSender.getCommits(key);
 
-        if (gitCommits.contains(lastSha)) {
+        if (!gitCommits.contains(lastSha)) {
             if (pipelineService.run()) {
                 runProcess(command);
                 answer = "Last commit pushed!";
