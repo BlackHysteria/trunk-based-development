@@ -1,6 +1,6 @@
 package com.bakumcev.demo.utils;
 
-import com.bakumcev.demo.enums.GitKeywords;
+import com.bakumcev.demo.enums.git.GitKeywords;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
@@ -8,9 +8,9 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.bakumcev.demo.enums.GitKeywords.AUTHOR;
-import static com.bakumcev.demo.enums.GitKeywords.COMMIT;
-import static com.bakumcev.demo.enums.GitKeywords.DATE;
+import static com.bakumcev.demo.enums.git.GitKeywords.AUTHOR;
+import static com.bakumcev.demo.enums.git.GitKeywords.COMMIT;
+import static com.bakumcev.demo.enums.git.GitKeywords.DATE;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.SPACE;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;

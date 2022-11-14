@@ -1,6 +1,6 @@
 package com.bakumcev.demo.service;
 
-import com.bakumcev.demo.enums.GitKeywords;
+import com.bakumcev.demo.enums.git.GitKeywords;
 
 import java.util.List;
 import java.util.Map;

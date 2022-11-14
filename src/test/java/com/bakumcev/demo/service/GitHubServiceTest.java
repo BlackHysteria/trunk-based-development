@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static com.bakumcev.demo.enums.GitCommand.GIT_SHOW_LAST;
+import static com.bakumcev.demo.enums.git.GitCommand.GIT_SHOW_LAST;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;

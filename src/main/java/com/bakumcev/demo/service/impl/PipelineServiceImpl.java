@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import static com.bakumcev.demo.enums.DockerCommand.DOCKER_BUILD;
-import static com.bakumcev.demo.enums.MavenKeywords.BUILD_SUCCESS;
+import static com.bakumcev.demo.enums.docker.DockerCommand.DOCKER_BUILD;
+import static com.bakumcev.demo.enums.maven.MavenKeywords.BUILD_SUCCESS;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 @Component

@@ -1,6 +1,6 @@
 package com.bakumcev.demo.service.impl;
 
-import com.bakumcev.demo.enums.GitKeywords;
+import com.bakumcev.demo.enums.git.GitKeywords;
 import com.bakumcev.demo.sender.GitHubSender;
 import com.bakumcev.demo.service.GitService;
 import com.bakumcev.demo.service.PipelineService;
@@ -16,9 +16,9 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.bakumcev.demo.enums.GitCommand.GIT_LOG;
-import static com.bakumcev.demo.enums.GitCommand.GIT_PUSH;
-import static com.bakumcev.demo.enums.GitCommand.GIT_SHOW_LAST;
+import static com.bakumcev.demo.enums.git.GitCommand.GIT_LOG;
+import static com.bakumcev.demo.enums.git.GitCommand.GIT_PUSH;
+import static com.bakumcev.demo.enums.git.GitCommand.GIT_SHOW_LAST;
 import static com.bakumcev.demo.utils.Utils.copy;
 import static com.bakumcev.demo.utils.Utils.lineProcessing;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -54,7 +54,7 @@ public class GitServiceImpl implements GitService {
         var lastSha = getLastSha(GIT_SHOW_LAST.getCommand());
         var gitCommits = gitHubSender.getCommits(key);
 
-        if (!gitCommits.contains(lastSha)) {
+        if (gitCommits.contains(lastSha)) {
             if (pipelineService.run()) {
                 runProcess(command);
                 answer = "Last commit pushed!";

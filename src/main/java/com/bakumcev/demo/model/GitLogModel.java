@@ -1,6 +1,6 @@
 package com.bakumcev.demo.model;
 
-import com.bakumcev.demo.enums.GitKeywords;
+import com.bakumcev.demo.enums.git.GitKeywords;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

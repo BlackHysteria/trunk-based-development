@@ -1,4 +1,4 @@
-package com.bakumcev.demo.enums;
+package com.bakumcev.demo.enums.docker;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
