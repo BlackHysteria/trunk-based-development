@@ -5,10 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum MavenKeywords {
+public enum DockerCommand {
 
-    BUILD_SUCCESS("BUILD SUCCESS"),
-    BUILD_FAILURE("BUILD FAILURE");
+    DOCKER_BUILD("docker build .");
 
     private final String command;
 
