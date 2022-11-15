@@ -1,16 +1,23 @@
-FROM maven:3.6.0-jdk-11-slim AS build
-COPY . /home/app/src
-COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean install
+# syntax=docker/dockerfile:1
 
-#
-# Package stage
-#
-FROM openjdk:11.0.7-jdk-slim
-COPY --from=build /home/app/target/*.jar /usr/local/lib/trunk-based-development.jar
-EXPOSE 8090
-ENTRYPOINT ["java", "-jar", "/usr/local/lib/trunk-based-development.jar"]
+FROM eclipse-temurin:17-jdk-jammy as base
 
-FROM openjdk:11.0.7-jdk-slim
-COPY target/trunk-based-development-1.0-SNAPSHOT.jar /trunk-based-development.jar
-CMD ["java", "-jar", "/trunk-based-development.jar"]
+RUN apt-get update
+RUN apt-get -y install git
+
+# set work dir
+WORKDIR /app
+
+# copy resources
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+COPY src ./src
+
+FROM base as build
+RUN ./mvnw package
+
+# run
+#FROM eclipse-temurin:17-jre-jammy as production
+#EXPOSE 8080
+#COPY --from=build /app/target/trunk-based-development-*.jar /trunk-based-development.jar
+#CMD ["java", "-jar", "/trunk-based-development.jar"]

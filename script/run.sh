@@ -3,9 +3,10 @@
 function myfunc ()
 {
 
-    if test "$BASH_COMMAND" = "git log -2";
+    if test "$BASH_COMMAND" = "git push";
     then
-        echo git only api
+        echo git only through api!
+        curl --location --request GET 'http://localhost:8080/run/'
         exit
     else
         return 0
@@ -15,5 +16,5 @@ function myfunc ()
 shopt -s extdebug
 trap "myfunc" DEBUG
 
-echo 2
-git log -2
+echo start
+git push
