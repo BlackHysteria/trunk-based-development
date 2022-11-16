@@ -24,6 +24,7 @@ public class PipelineServiceImpl implements PipelineService {
         var process = Runtime.getRuntime().exec(DOCKER_RUN_TEST.getCommand());
         BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
+
         while ((row = input.readLine()) != null) {
             System.out.println("Line: " + row);
             if (row.contains(BUILD_SUCCESS.getCommand())) {
