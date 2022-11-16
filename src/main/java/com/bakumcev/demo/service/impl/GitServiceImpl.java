@@ -16,6 +16,9 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.bakumcev.demo.enums.MessageCode.COMMIT_PUSHED;
+import static com.bakumcev.demo.enums.MessageCode.LAST_COMMIT_ALREADY;
+import static com.bakumcev.demo.enums.MessageCode.PIPELINE_FILED;
 import static com.bakumcev.demo.enums.git.GitCommand.GIT_LOG;
 import static com.bakumcev.demo.enums.git.GitCommand.GIT_PUSH;
 import static com.bakumcev.demo.enums.git.GitCommand.GIT_SHOW_LAST;
@@ -51,18 +54,28 @@ public class GitServiceImpl implements GitService {
                 username +
                 "/trunk-based-development.git/ HEAD";
 
+        //Получаем хэш последнего коммита
         var lastSha = getLastSha(GIT_SHOW_LAST.getCommand());
-        var gitCommits = gitHubSender.getCommits(key);
 
-        if (gitCommits.contains(lastSha)) {
-            if (pipelineService.run()) {
-                runProcess(command);
-                answer = "Last commit pushed!";
-            }
+        //Проверяем если ли этот коммит в github`е
+        var gitHubCommits = gitHubSender.getCommits(key);
+
+        if (!gitHubCommits.contains(lastSha)) {
+            answer = pipelineRun(command);
         } else {
-            answer = "Latest commit is already in the repository!";
+            answer = LAST_COMMIT_ALREADY.getCode();
         }
         return answer;
+    }
+
+    private String pipelineRun(String command) {
+        //Запускаем тесты в контейнере
+        if (pipelineService.run()) {
+            runProcess(command);
+            return COMMIT_PUSHED.getCode();
+        } else  {
+            return PIPELINE_FILED.getCode();
+        }
     }
 
     @Override

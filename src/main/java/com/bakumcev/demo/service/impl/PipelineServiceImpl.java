@@ -22,7 +22,7 @@ public class PipelineServiceImpl implements PipelineService {
         var result = false;
         var row = EMPTY;
         var process = Runtime.getRuntime().exec(DOCKER_RUN_TEST.getCommand());
-        var input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
         while ((row = input.readLine()) != null) {
             System.out.println("Line: " + row);

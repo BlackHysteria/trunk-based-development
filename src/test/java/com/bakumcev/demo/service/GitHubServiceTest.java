@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import static com.bakumcev.demo.enums.MessageCode.COMMIT_PUSHED;
+import static com.bakumcev.demo.enums.MessageCode.LAST_COMMIT_ALREADY;
 import static com.bakumcev.demo.enums.git.GitCommand.GIT_SHOW_LAST;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,7 +48,7 @@ class GitHubServiceTest extends AbstractSpringIntegrationTest {
         var result = gitServiceSpy.push();
         verify(gitServiceSpy, times(1)).runProcess(any());
 
-        assertEquals("Last commit pushed!", result);
+        assertEquals(COMMIT_PUSHED.getCode(), result);
     }
 
     @Test
@@ -61,6 +63,6 @@ class GitHubServiceTest extends AbstractSpringIntegrationTest {
         var result = gitServiceSpy.push();
         verify(gitServiceSpy, times(0)).runProcess(any());
 
-        assertEquals("Latest commit is already in the repository!", result);
+        assertEquals(LAST_COMMIT_ALREADY.getCode(), result);
     }
 }

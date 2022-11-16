@@ -4,6 +4,7 @@ import com.bakumcev.demo.dto.ResponseDto;
 import com.bakumcev.demo.service.GitService;
 import com.bakumcev.demo.service.PipelineService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +33,11 @@ public class TrunkController {
                 .success(true)
                 .message("Yes")
                 .build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    public void handleException() {
+        //
     }
 
 }
