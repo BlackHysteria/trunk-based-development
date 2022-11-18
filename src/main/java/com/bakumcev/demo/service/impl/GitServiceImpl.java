@@ -6,6 +6,7 @@ import com.bakumcev.demo.service.GitService;
 import com.bakumcev.demo.service.PipelineService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +19,8 @@ import java.util.Map;
 
 import static com.bakumcev.demo.enums.MessageCode.COMMIT_PUSHED;
 import static com.bakumcev.demo.enums.MessageCode.LAST_COMMIT_ALREADY;
-import static com.bakumcev.demo.enums.MessageCode.PIPELINE_FILED;
+import static com.bakumcev.demo.enums.MessageCode.PIPELINE_FAILED;
+import static com.bakumcev.demo.enums.MessageCode.SHA_LAST_COMMIT;
 import static com.bakumcev.demo.enums.git.GitCommand.GIT_LOG;
 import static com.bakumcev.demo.enums.git.GitCommand.GIT_PUSH;
 import static com.bakumcev.demo.enums.git.GitCommand.GIT_SHOW_LAST;
@@ -26,6 +28,7 @@ import static com.bakumcev.demo.utils.Utils.copy;
 import static com.bakumcev.demo.utils.Utils.lineProcessing;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class GitServiceImpl implements GitService {
@@ -43,6 +46,7 @@ public class GitServiceImpl implements GitService {
     private final PipelineService pipelineService;
 
     @Override
+    @SneakyThrows
     public String push() {
         String answer = null;
         var command = GIT_PUSH.getCommand() +
@@ -56,6 +60,7 @@ public class GitServiceImpl implements GitService {
 
         //Получаем хэш последнего коммита
         var lastSha = getLastSha(GIT_SHOW_LAST.getCommand());
+        log.info(SHA_LAST_COMMIT.getCode(),  lastSha);
 
         //Проверяем если ли этот коммит в github`е
         var gitHubCommits = gitHubSender.getCommits(key);
@@ -72,9 +77,11 @@ public class GitServiceImpl implements GitService {
         //Запускаем тесты в контейнере
         if (pipelineService.run()) {
             runProcess(command);
+            log.info(COMMIT_PUSHED.getCode());
             return COMMIT_PUSHED.getCode();
-        } else  {
-            return PIPELINE_FILED.getCode();
+        } else {
+            log.info(PIPELINE_FAILED.getCode());
+            return PIPELINE_FAILED.getCode();
         }
     }
 

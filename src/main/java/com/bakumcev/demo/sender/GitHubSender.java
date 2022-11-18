@@ -8,11 +8,15 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.client.UnknownHttpStatusCodeException;
 
+import static com.bakumcev.demo.enums.MessageCode.GITHUB_IS_AVAILABLE;
+import static com.bakumcev.demo.enums.MessageCode.GITHUB_IS_NOT_AVAILABLE;
+import static com.bakumcev.demo.enums.MessageCode.GITHUB_SEND_REQUEST;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
+@Slf4j
 @Component
 public class GitHubSender {
 
@@ -29,11 +33,13 @@ public class GitHubSender {
             headers.set("Accept", "application/vnd.github+json");
             headers.set("Authorization", "Bearer " + key);
             var requestEntity = new HttpEntity<>(null, headers);
+            log.info(GITHUB_SEND_REQUEST.getCode());
             var response = restTemplate.exchange(apiCommits, HttpMethod.GET, requestEntity, String.class);
+            log.info(GITHUB_IS_AVAILABLE.getCode());
             return String.valueOf(response.getBody());
-        } catch (UnknownHttpStatusCodeException exception) {
-            //log.error("Error getting commits from github");
-            return EMPTY;
+        } catch (RestClientException exception) {
+            log.error(GITHUB_IS_NOT_AVAILABLE.getCode());
         }
+        return EMPTY;
     }
 }

@@ -1,4 +1,4 @@
-package com.bakumcev.demo.utils;
+package com.bakumcev.demo.config;
 
 import org.springframework.util.FileCopyUtils;
 

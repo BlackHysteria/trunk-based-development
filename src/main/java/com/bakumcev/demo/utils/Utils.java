@@ -28,21 +28,21 @@ public class Utils {
 
     public static void lineProcessing(String line, Map<GitKeywords, String> gitLog) {
         if (isNotBlank(line)) {
-            if (line.contains(COMMIT.getKeywords()) && safety1(line)) {
-                gitLog.put(COMMIT, get(line));
+            if (line.contains(COMMIT.getKeywords()) && containsOneSpace(line)) {
+                gitLog.put(COMMIT, getOneSpace(line));
             }
 
-            if (line.contains(AUTHOR.getKeywords()) && safety1(line)) {
-                gitLog.put(AUTHOR, get(line));
+            if (line.contains(AUTHOR.getKeywords()) && containsOneSpace(line)) {
+                gitLog.put(AUTHOR, getOneSpace(line));
             }
 
-            if (line.contains(DATE.getKeywords()) && safety2(line)) {
-                gitLog.put(DATE, get2(line));
+            if (line.contains(DATE.getKeywords()) && containsTwoSpace(line)) {
+                gitLog.put(DATE, getTwoSpace(line));
             }
         }
     }
 
-    private boolean safety1(String line) {
+    private boolean containsOneSpace(String line) {
         return Optional.ofNullable(line)
                 .map(String::strip)
                 .map(str -> str.split(SPACE))
@@ -51,7 +51,7 @@ public class Utils {
                 .orElse(false);
     }
 
-    private boolean safety2(String line) {
+    private boolean containsTwoSpace(String line) {
         return Optional.ofNullable(line)
                 .map(String::strip)
                 .map(str -> str.split(" {2}"))
@@ -60,7 +60,7 @@ public class Utils {
                 .orElse(false);
     }
 
-    private String get(String line) {
+    private String getOneSpace(String line) {
         return Optional.ofNullable(line)
                 .map(str -> str.split(SPACE))
                 .map(str1 -> str1[1])
@@ -68,7 +68,7 @@ public class Utils {
                 .orElse(EMPTY);
     }
 
-    private String get2(String line) {
+    private String getTwoSpace(String line) {
         return Optional.ofNullable(line)
                 .map(str -> str.split(" {2}"))
                 .map(str1 -> str1[1])
