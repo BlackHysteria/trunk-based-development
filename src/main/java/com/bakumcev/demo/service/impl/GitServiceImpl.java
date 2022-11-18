@@ -70,6 +70,7 @@ public class GitServiceImpl implements GitService {
         } else {
             answer = LAST_COMMIT_ALREADY.getCode();
         }
+
         return answer;
     }
 
