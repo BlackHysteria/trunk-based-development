@@ -44,7 +44,7 @@ class GitHubServiceTest extends AbstractSpringIntegrationTest {
 
         var result = gitServiceSpy.push();
 
-        assertEquals(LAST_COMMIT_ALREADY.getCode(), result);
+        assertEquals("1", result);
     }
 
     @Test
