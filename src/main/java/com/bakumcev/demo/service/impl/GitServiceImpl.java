@@ -64,7 +64,7 @@ public class GitServiceImpl implements GitService {
 
     private String pipelineRun(String command) {
         if (pipelineService.run()) {
-            bashService.runCommand(command);
+            //bashService.runCommand(command);
             log.info(COMMIT_PUSHED.getCode());
             return COMMIT_PUSHED.getCode();
         } else {

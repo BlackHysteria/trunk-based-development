@@ -20,9 +20,8 @@ public class TrunkController {
     private final GitService gitService;
 
     @GetMapping("/git/push")
-    public ResponseDto push() {
-        var result = gitService.push();
-        return ResponseDto.builder().message(result).build();
+    public String push() {
+        return gitService.push();
     }
 
     @ExceptionHandler({Exception.class, RestClientException.class })
