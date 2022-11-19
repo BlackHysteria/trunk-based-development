@@ -7,29 +7,21 @@ import com.bakumcev.demo.service.PipelineService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import static com.bakumcev.demo.enums.GitCommand.GIT_SHOW_LAST;
 import static com.bakumcev.demo.enums.MessageCode.COMMIT_PUSHED;
 import static com.bakumcev.demo.enums.MessageCode.LAST_COMMIT_ALREADY;
 import static com.bakumcev.demo.enums.MessageCode.PIPELINE_FAILED;
 import static com.bakumcev.demo.enums.MessageCode.SHA_LAST_COMMIT;
-import static com.bakumcev.demo.enums.GitCommand.GIT_PUSH;
-import static com.bakumcev.demo.enums.GitCommand.GIT_SHOW_LAST;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class GitServiceImpl implements GitService {
-
-    @Value("${git.username}")
-    private String username;
-
-    @Value("${git.key}")
-    private String key;
 
     private final GitHubSender gitHubSender;
     private final PipelineService pipelineService;
@@ -39,32 +31,23 @@ public class GitServiceImpl implements GitService {
     @SneakyThrows
     public String push() {
         String answer = null;
-        var command = GIT_PUSH.getCommand() +
-                " https://" +
-                username +
-                ":" +
-                key +
-                "@github.com/" +
-                username +
-                "/trunk-based-development.git/ HEAD";
 
         var lastSha = getLastSha(GIT_SHOW_LAST.getCommand());
         log.info(SHA_LAST_COMMIT.getCode(), lastSha);
 
-        var gitHubCommits = gitHubSender.getCommits(key);
+        var gitHubCommits = gitHubSender.getCommits();
 
         if (gitHubCommits.contains(lastSha)) {
             answer = LAST_COMMIT_ALREADY.getCode();
         } else {
-            answer = pipelineRun(command);
+            answer = pipelineRun();
         }
 
         return answer;
     }
 
-    private String pipelineRun(String command) {
+    private String pipelineRun() {
         if (pipelineService.run()) {
-            //bashService.runCommand(command);
             log.info(COMMIT_PUSHED.getCode());
             return COMMIT_PUSHED.getCode();
         } else {

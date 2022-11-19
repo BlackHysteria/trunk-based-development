@@ -20,14 +20,17 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 @Component
 public class GitHubSender {
 
+    @Value("${github.api.commits}")
+    private String apiCommits;
+
+    @Value("${git.key}")
+    private String key;
+
     @Autowired
     @Qualifier("githubTemplate")
     private RestTemplate restTemplate;
 
-    @Value("${github.api.commits}")
-    private String apiCommits;
-
-    public String getCommits(String key) {
+    public String getCommits() {
         try {
             var headers = new HttpHeaders();
             headers.set("Accept", "application/vnd.github+json");

@@ -1,6 +1,5 @@
 package com.bakumcev.demo.controller;
 
-import com.bakumcev.demo.dto.ResponseDto;
 import com.bakumcev.demo.service.GitService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +23,10 @@ public class TrunkController {
         return gitService.push();
     }
 
-    @ExceptionHandler({Exception.class, RestClientException.class })
+    @ExceptionHandler({ Exception.class, RestClientException.class })
     @ResponseBody
-    public ResponseDto handleException() {
-        return ResponseDto.builder().message(ERROR_REQUEST.getCode()).build();
+    public String handleException() {
+        return ERROR_REQUEST.getCode();
     }
 
 }

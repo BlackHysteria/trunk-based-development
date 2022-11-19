@@ -6,7 +6,6 @@ import com.bakumcev.demo.service.impl.GitServiceImpl;
 import com.bakumcev.demo.utils.JsonReader;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static com.bakumcev.demo.enums.GitCommand.GIT_SHOW_LAST;
@@ -17,9 +16,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 class GitHubServiceTest extends AbstractSpringIntegrationTest {
-
-    @Value("${git.key}")
-    private String gitKey;
 
     @Autowired
     private GitServiceImpl service;
@@ -39,12 +35,12 @@ class GitHubServiceTest extends AbstractSpringIntegrationTest {
 
         var gitServiceSpy = spy(service);
         when(gitServiceSpy.getLastSha(gitCommand)).thenReturn("4a3bcb4960bd78072c61b6773b20f857216e741n");
-        when(gitHubSender.getCommits(gitKey)).thenReturn(gitResponse);
+        when(gitHubSender.getCommits()).thenReturn(gitResponse);
         when(pipelineService.run()).thenReturn(true);
 
         var result = gitServiceSpy.push();
 
-        assertEquals("3", result);
+        assertEquals(COMMIT_PUSHED.getCode(), result);
     }
 
     @Test
@@ -54,7 +50,7 @@ class GitHubServiceTest extends AbstractSpringIntegrationTest {
 
         var gitServiceSpy = spy(service);
         when(gitServiceSpy.getLastSha(gitCommand)).thenReturn("0199da360958afff5006f04a7e5ccbacca7c4b10");
-        when(gitHubSender.getCommits(gitKey)).thenReturn(gitResponse);
+        when(gitHubSender.getCommits()).thenReturn(gitResponse);
 
         var result = gitServiceSpy.push();
 
