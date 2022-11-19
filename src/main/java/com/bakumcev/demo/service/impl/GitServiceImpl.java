@@ -56,6 +56,7 @@ public class GitServiceImpl implements GitService {
         } else {
             answer = pipelineRun(command);
         }
+
         return answer;
     }
 
