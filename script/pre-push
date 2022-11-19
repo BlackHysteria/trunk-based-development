@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo Run trunk based process...
+curl --location --request GET 'http://localhost:8080/git/push'
+echo 
+echo Finish trunk based process!

@@ -1,6 +1,7 @@
 package com.bakumcev.demo.service.impl;
 
 import com.bakumcev.demo.sender.GitHubSender;
+import com.bakumcev.demo.service.BashService;
 import com.bakumcev.demo.service.GitService;
 import com.bakumcev.demo.service.PipelineService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class GitServiceImpl implements GitService {
 
     private final GitHubSender gitHubSender;
     private final PipelineService pipelineService;
+    private final BashService bashService;
 
     @Override
     @SneakyThrows
@@ -62,7 +64,7 @@ public class GitServiceImpl implements GitService {
 
     private String pipelineRun(String command) {
         if (pipelineService.run()) {
-            runProcess(command);
+            bashService.runCommand(command);
             log.info(COMMIT_PUSHED.getCode());
             return COMMIT_PUSHED.getCode();
         } else {
@@ -74,14 +76,9 @@ public class GitServiceImpl implements GitService {
     @Override
     @SneakyThrows
     public String getLastSha(String command) {
-        var process = runProcess(command);
+        var process = bashService.runCommand(command);
         var input = new BufferedReader(new InputStreamReader(process.getInputStream()));
         return input.readLine();
-    }
-
-    @SneakyThrows
-    public Process runProcess(String command) {
-        return Runtime.getRuntime().exec(command);
     }
 
 }

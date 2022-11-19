@@ -9,14 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import static com.bakumcev.demo.enums.GitCommand.GIT_SHOW_LAST;
 import static com.bakumcev.demo.enums.MessageCode.COMMIT_PUSHED;
 import static com.bakumcev.demo.enums.MessageCode.LAST_COMMIT_ALREADY;
-import static com.bakumcev.demo.enums.GitCommand.GIT_SHOW_LAST;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class GitHubServiceTest extends AbstractSpringIntegrationTest {
@@ -46,7 +43,6 @@ class GitHubServiceTest extends AbstractSpringIntegrationTest {
         when(pipelineService.run()).thenReturn(true);
 
         var result = gitServiceSpy.push();
-        verify(gitServiceSpy, times(1)).runProcess(any());
 
         assertEquals(COMMIT_PUSHED.getCode(), result);
     }
@@ -61,7 +57,6 @@ class GitHubServiceTest extends AbstractSpringIntegrationTest {
         when(gitHubSender.getCommits(gitKey)).thenReturn(gitResponse);
 
         var result = gitServiceSpy.push();
-        verify(gitServiceSpy, times(0)).runProcess(any());
 
         assertEquals(LAST_COMMIT_ALREADY.getCode(), result);
     }
