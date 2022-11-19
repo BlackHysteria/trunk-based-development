@@ -1,4 +1,4 @@
-package com.bakumcev.demo.enums.maven;
+package com.bakumcev.demo.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

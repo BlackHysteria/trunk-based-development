@@ -1,5 +1,2 @@
 ###
 GET http://localhost:8080/pipeline/run
-
-###
-GET http://localhost:8080/test

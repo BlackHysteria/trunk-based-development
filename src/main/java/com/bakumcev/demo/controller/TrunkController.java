@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
+import static com.bakumcev.demo.enums.MessageCode.ERROR_REQUEST;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -26,9 +28,7 @@ public class TrunkController {
     @ExceptionHandler({Exception.class, RestClientException.class })
     @ResponseBody
     public ResponseDto handleException() {
-        log.error("Error executing request!");
-
-        return ResponseDto.builder().message("Error executing request!").build();
+        return ResponseDto.builder().message(ERROR_REQUEST.getCode()).build();
     }
 
 }

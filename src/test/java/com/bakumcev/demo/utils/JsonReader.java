@@ -1,5 +1,6 @@
-package com.bakumcev.demo.config;
+package com.bakumcev.demo.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.io.InputStreamReader;
 
 import static org.springframework.util.Assert.notNull;
 
+@Slf4j
 public class JsonReader {
 
     public String getResourceAsString(String fileName) {
@@ -16,7 +18,7 @@ public class JsonReader {
         try {
             return FileCopyUtils.copyToString(new InputStreamReader(is));
         } catch (IOException e) {
-            //log.error("Error read file {}", fileName, e);
+            log.error("Error read file {}", fileName, e);
         }
         return null;
     }

@@ -1,5 +1,0 @@
-commit f4e6da7e1a81f8b7569c428f6dff42630a29800c (HEAD -> master)
-Author: i.bakumtsev <i.bakumtsev@mail.ru>
-Date:   Wed Nov 16 19:00:33 2022 +0300
-
-        test
