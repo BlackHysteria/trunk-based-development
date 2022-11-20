@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.File;
 
+import static com.bakumcev.demo.enums.MessageCode.GIT_HOOK_CREATED;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -19,6 +21,6 @@ public class CreateHookImpl implements CreateHook {
     @PostConstruct
     public void init() {
         bashService.runFromFile("bash ./hook.sh", null, new File("./"));
-        log.info("Git hook for pre-push is created!");
+        log.info(GIT_HOOK_CREATED.getCode());
     }
 }
