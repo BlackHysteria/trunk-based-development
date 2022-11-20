@@ -5,6 +5,6 @@ GET http://localhost:8080/pipeline/run
 
 GET https://api.github.com/repos/BlackHysteria/trunk-based-development/commits
 Accept: application/vnd.github+json
-Authorization: Bearer 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
+Authorization: Bearer <в почте>
 
 ###
